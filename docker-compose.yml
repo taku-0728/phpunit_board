@@ -1,25 +1,38 @@
 version: '3'
 
 services:
-  web_php8:
-    build:
-      context: ./web_php8
-    volumes:
-      - ./src/phpunit_board:/var/www/phpunit_board
-      - ./web_php8/setup/.bashrc:/root/.bashrc
-    ports:
-      - "80:80"
-    working_dir: /var/www/phpunit_board/
-    environment:
-      TZ: "Asia/Tokyo"
+    web_php8:
+        build:
+            context: ./web_php8
+            dockerfile: Dockerfile
+        volumes:
+            - ./src/phpunit_board:/var/www/phpunit_board
+            - ./web_php8/setup/.bashrc:/root/.bashrc
+        ports:
+            - "80:80"
+        working_dir: /var/www/phpunit_board/
+        environment:
+            TZ: "Asia/Tokyo"
 
-  db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: pass
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      TZ: "Asia/Tokyo"
+    db:
+        image: mysql:8.0
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_DATABASE: db
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+            TZ: "Asia/Tokyo"
+
+    php-my-admin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db
+        ports:
+            - "89:80"
+        environment:
+            MYSQL_USERNAME: user
+            MYSQL_ROOT_PASSWORD: pass
+            PMA_HOST: db
+            PMA_PORT: 3306
