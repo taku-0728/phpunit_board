@@ -20,4 +20,6 @@ FROM php:8.0-apache
     # Vim
     && apt-get install -y vim \
     # mod_rewrite 有効化
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    # PHP PDO MySQL PHPでMYSQLを使う設定
+    && docker-php-ext-install pdo_mysql

@@ -18,6 +18,8 @@ services:
             MYSQL_PASSWORD: pass
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
             TZ: "Asia/Tokyo"
+        ports:
+            - "3306:3306"
 
     php-my-admin:
         image: phpmyadmin/phpmyadmin:5.0
