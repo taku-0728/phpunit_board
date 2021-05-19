@@ -6,7 +6,7 @@ services:
             context: ./web_php8
             dockerfile: Dockerfile
         volumes:
-            - ./src/phpunit_board:/var/www/html
+            - ./src:/var/www/html
         ports:
             - "80:80"
 
